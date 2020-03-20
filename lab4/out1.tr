@@ -1,0 +1,109 @@
+v 0.10000000000000001 eval {set sim_annotation {0 sending message 1}}
+s 0.100000000 _0_ AGT  --- 0 message 500 [0 0 0 0] ------- [0:42 1:42 32 0] 
+v 0.10000000000000001 eval {set sim_annotation {2 sending message 2}}
+s 0.100000000 _2_ AGT  --- 1 message 500 [0 0 0 0] ------- [2:42 1:42 32 0] 
+s 0.100095000 _2_ MAC  --- 0 ARP 86 [0 ffffffff 2 806] ------- [REQUEST 2/2 0/1]
+r 0.100783467 _0_ MAC  --- 0 ARP 28 [0 ffffffff 2 806] ------- [REQUEST 2/2 0/1]
+s 0.101253467 _0_ MAC  --- 0 ARP 86 [0 ffffffff 0 806] ------- [REQUEST 0/0 0/1]
+r 0.101941933 _2_ MAC  --- 0 ARP 28 [0 ffffffff 0 806] ------- [REQUEST 0/0 0/1]
+r 0.101942056 _1_ MAC  --- 0 ARP 28 [0 ffffffff 0 806] ------- [REQUEST 0/0 0/1]
+s 0.102317056 _1_ MAC  --- 0 RTS 44 [52e 0 1 0] 
+r 0.102669646 _0_ MAC  --- 0 RTS 44 [52e 0 1 0] 
+s 0.102679646 _0_ MAC  --- 0 CTS 38 [3f4 1 0 0] 
+r 0.102984236 _1_ MAC  --- 0 CTS 38 [3f4 1 0 0] 
+s 0.102994236 _1_ MAC  --- 0 ARP 86 [13a 0 1 806] ------- [REPLY 1/1 0/0]
+r 0.103682826 _0_ MAC  --- 0 ARP 28 [13a 0 1 806] ------- [REPLY 1/1 0/0]
+s 0.103692826 _0_ MAC  --- 0 ACK 38 [0 1 0 0] 
+r 0.103997415 _1_ MAC  --- 0 ACK 38 [0 1 0 0] 
+s 0.104046826 _0_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+r 0.104399415 _1_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+s 0.104409415 _1_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+r 0.104714005 _0_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+s 0.104724005 _0_ MAC  --- 0 message 558 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+r 0.109188595 _1_ MAC  --- 0 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+s 0.109198595 _1_ MAC  --- 0 ACK 38 [0 0 0 0] 
+r 0.109213595 _1_ AGT  --- 0 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+v 0.10921359475473637 eval {set sim_annotation {1 received {1:first_message} from 0}}
+v 0.10921359475473637 eval {set sim_annotation {1 sending message 1}}
+s 0.109213595 _1_ AGT  --- 2 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+r 0.109213595 _1_ AGT  --- 2 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+v 0.10921359475473637 eval {set sim_annotation {1 received redundant message 1 from 1}}
+r 0.109503184 _0_ MAC  --- 0 ACK 38 [0 0 0 0] 
+M 0.60000 2 (60.00, 30.00, 0.00), (330.00, 30.00), 10000.00
+v 0.80000000000000004 eval {set sim_annotation {0 sending message 5}}
+s 0.800000000 _0_ AGT  --- 3 message 500 [0 0 0 0] ------- [0:42 1:42 32 0] 
+v 0.80000000000000004 eval {set sim_annotation {2 sending message 6}}
+s 0.800000000 _2_ AGT  --- 4 message 500 [0 0 0 0] ------- [2:42 1:42 32 0] 
+D 0.800000000 _2_ IFQ  ARP 1 message 500 [0 0 2 800] ------- [2:42 1:42 32 0] 
+s 0.800295000 _2_ MAC  --- 0 ARP 86 [0 ffffffff 2 806] ------- [REQUEST 2/2 0/1]
+r 0.800983400 _1_ MAC  --- 0 ARP 28 [0 ffffffff 2 806] ------- [REQUEST 2/2 0/1]
+r 0.800983433 _0_ MAC  --- 0 ARP 28 [0 ffffffff 2 806] ------- [REQUEST 2/2 0/1]
+s 0.801173433 _0_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+r 0.801526023 _1_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+s 0.801536023 _1_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+r 0.801840613 _0_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+s 0.801850613 _0_ MAC  --- 3 message 558 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+r 0.806315203 _1_ MAC  --- 3 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+s 0.806325203 _1_ MAC  --- 0 ACK 38 [0 0 0 0] 
+r 0.806340203 _1_ AGT  --- 3 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+v 0.80634020251393479 eval {set sim_annotation {1 received {5:fifth_message} from 0}}
+v 0.80634020251393479 eval {set sim_annotation {1 sending message 5}}
+s 0.806340203 _1_ AGT  --- 5 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+r 0.806340203 _1_ AGT  --- 5 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+v 0.80634020251393479 eval {set sim_annotation {1 received redundant message 5 from 1}}
+r 0.806629792 _0_ MAC  --- 0 ACK 38 [0 0 0 0] 
+s 0.806799203 _1_ MAC  --- 0 RTS 44 [52e 2 1 0] 
+r 0.807151603 _2_ MAC  --- 0 RTS 44 [52e 2 1 0] 
+s 0.807161603 _2_ MAC  --- 0 CTS 38 [3f4 1 0 0] 
+r 0.807466003 _1_ MAC  --- 0 CTS 38 [3f4 1 0 0] 
+s 0.807476003 _1_ MAC  --- 0 ARP 86 [13a 2 1 806] ------- [REPLY 1/1 2/2]
+r 0.808164403 _2_ MAC  --- 0 ARP 28 [13a 2 1 806] ------- [REPLY 1/1 2/2]
+s 0.808174403 _2_ MAC  --- 0 ACK 38 [0 1 0 0] 
+r 0.808478803 _1_ MAC  --- 0 ACK 38 [0 1 0 0] 
+s 0.809068403 _2_ MAC  --- 0 RTS 44 [13ee 1 2 0] 
+r 0.809420803 _1_ MAC  --- 0 RTS 44 [13ee 1 2 0] 
+s 0.809430803 _1_ MAC  --- 0 CTS 38 [12b4 2 0 0] 
+r 0.809735203 _2_ MAC  --- 0 CTS 38 [12b4 2 0 0] 
+s 0.809745203 _2_ MAC  --- 4 message 558 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+r 0.814209603 _1_ MAC  --- 4 message 500 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+s 0.814219603 _1_ MAC  --- 0 ACK 38 [0 2 0 0] 
+r 0.814234603 _1_ AGT  --- 4 message 500 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+v 0.81423460251393454 eval {set sim_annotation {1 received {6:sixth_message} from 2}}
+v 0.81423460251393454 eval {set sim_annotation {1 sending message 6}}
+s 0.814234603 _1_ AGT  --- 6 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+r 0.814234603 _1_ AGT  --- 6 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+v 0.81423460251393454 eval {set sim_annotation {1 received redundant message 6 from 1}}
+r 0.814524003 _2_ MAC  --- 0 ACK 38 [0 2 0 0] 
+M 1.10000 2 (330.00, 30.00, 0.00), (500.00, 30.00), 10000.00
+v 1.3 eval {set sim_annotation {2 sending message 15}}
+s 1.300000000 _2_ AGT  --- 7 message 500 [0 0 0 0] ------- [2:42 1:42 32 0] 
+v 1.3 eval {set sim_annotation {0 sending message 16}}
+s 1.300000000 _0_ AGT  --- 8 message 500 [0 0 0 0] ------- [0:42 1:42 32 0] 
+s 1.300235000 _0_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+r 1.300587590 _1_ MAC  --- 0 RTS 44 [13ee 1 0 0] 
+s 1.300597590 _1_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+r 1.300902179 _0_ MAC  --- 0 CTS 38 [12b4 0 0 0] 
+s 1.300912179 _0_ MAC  --- 8 message 558 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+r 1.305376769 _1_ MAC  --- 8 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+s 1.305386769 _1_ MAC  --- 0 ACK 38 [0 0 0 0] 
+r 1.305401769 _1_ AGT  --- 8 message 500 [13a 1 0 800] ------- [0:42 1:42 32 0] 
+v 1.3054017691806015 eval {set sim_annotation {1 received {16:sixteenth_message} from 0}}
+v 1.3054017691806015 eval {set sim_annotation {1 sending message 16}}
+s 1.305401769 _1_ AGT  --- 9 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+r 1.305401769 _1_ AGT  --- 9 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+v 1.3054017691806015 eval {set sim_annotation {1 received redundant message 16 from 1}}
+r 1.305691359 _0_ MAC  --- 0 ACK 38 [0 0 0 0] 
+s 1.305871179 _2_ MAC  --- 0 RTS 44 [13ee 1 2 0] 
+r 1.306223873 _1_ MAC  --- 0 RTS 44 [13ee 1 2 0] 
+s 1.306233873 _1_ MAC  --- 0 CTS 38 [12b4 2 0 0] 
+r 1.306538567 _2_ MAC  --- 0 CTS 38 [12b4 2 0 0] 
+s 1.306548567 _2_ MAC  --- 7 message 558 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+r 1.311013260 _1_ MAC  --- 7 message 500 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+s 1.311023260 _1_ MAC  --- 0 ACK 38 [0 2 0 0] 
+r 1.311038260 _1_ AGT  --- 7 message 500 [13a 1 2 800] ------- [2:42 1:42 32 0] 
+v 1.3110382603189392 eval {set sim_annotation {1 received {15:fifteenth_message} from 2}}
+v 1.3110382603189392 eval {set sim_annotation {1 sending message 15}}
+s 1.311038260 _1_ AGT  --- 10 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+r 1.311038260 _1_ AGT  --- 10 message 500 [0 0 0 0] ------- [1:42 1:42 32 0] 
+v 1.3110382603189392 eval {set sim_annotation {1 received redundant message 15 from 1}}
+r 1.311327954 _2_ MAC  --- 0 ACK 38 [0 2 0 0] 

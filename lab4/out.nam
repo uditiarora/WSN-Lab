@@ -1,0 +1,52 @@
+n -t * -s 0  -x 200 -y 30 -Z 0 -z 30  -v circle -c black
+n -t * -s 1  -x 330 -y 150 -Z 0 -z 30  -v circle -c black
+n -t * -s 2  -x 60 -y 30 -Z 0 -z 30  -v circle -c black
+V -t * -v 1.0a5 -a 0
+W -t * -x 700 -y 200
+A -t * -n 1 -p 0 -o 0x7fffffff -c 30 -a 1
+A -t * -h 1 -m 1073741823 -s 0
+c -t * -i 8 -n red
+c -t * -i 1 -n black
+c -t * -i 7 -n purple
+c -t * -i 3 -n green
+v -t 0.1 -e sim_annotation 0.1 1 0 sending message 1
+v -t 0.101 -e sim_annotation 0.101 2 2 sending message 2
++ -t 0.103625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 0 -k MAC 
+- -t 0.103625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 0 -k MAC
+h -t 0.103625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 0 -k MAC
++ -t 0.103725000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 1 -k MAC 
+- -t 0.103725000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 1 -k MAC
+h -t 0.103725000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 1 -k MAC
+d -t 0.107725467 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 1 -k MAC
+d -t 0.107725985 -s 1 -d -1 -p message -e 500 -c 2 -a 0 -i 1 -k MAC
+v -t 0.2 -e sim_annotation 0.2 3 0 sending message 11
+v -t 0.2 -e sim_annotation 0.2 4 2 sending message 12
++ -t 0.203525000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 3 -k MAC 
+- -t 0.203525000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 3 -k MAC
+h -t 0.203525000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 3 -k MAC
++ -t 0.203625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 2 -k MAC 
+- -t 0.203625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 2 -k MAC
+h -t 0.203625000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 2 -k MAC
+d -t 0.207625467 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 2 -k MAC
+d -t 0.207625590 -s 1 -d -1 -p message -e 500 -c 2 -a 0 -i 2 -k MAC
+n -t 0.250000 -s 2 -x 60.000000 -y 30.000000 -U 10000.000000 -V 0.000000 -T 0.044000
+v -t 0.35 -e sim_annotation 0.35 5 0 sending message 3
+v -t 0.351 -e sim_annotation 0.351 6 2 sending message 4
++ -t 0.352325000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 4 -k MAC 
+- -t 0.352325000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 4 -k MAC
+h -t 0.352325000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 4 -k MAC
++ -t 0.353825000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 5 -k MAC 
+- -t 0.353825000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 5 -k MAC
+h -t 0.353825000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 5 -k MAC
+d -t 0.357825694 -s 1 -d -1 -p message -e 500 -c 2 -a 0 -i 5 -k MAC
+d -t 0.357826000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 5 -k MAC
+v -t 0.45 -e sim_annotation 0.45 7 0 sending message 13
+v -t 0.45 -e sim_annotation 0.45 8 2 sending message 14
++ -t 0.450725000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 6 -k MAC 
+- -t 0.450725000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 6 -k MAC
+h -t 0.450725000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 6 -k MAC
++ -t 0.450925000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 7 -k MAC 
+- -t 0.450925000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 7 -k MAC
+h -t 0.450925000 -s 2 -d -1 -p message -e 500 -c 2 -a 0 -i 7 -k MAC
+d -t 0.454925694 -s 1 -d -1 -p message -e 500 -c 2 -a 0 -i 7 -k MAC
+d -t 0.454926000 -s 0 -d -1 -p message -e 500 -c 2 -a 0 -i 7 -k MAC
