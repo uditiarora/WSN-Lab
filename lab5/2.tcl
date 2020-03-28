@@ -1,168 +1,144 @@
-
-Mac/Simple set bandwidth_ 1Mb
-
-set MESSAGE_PORT 42
-set BROADCAST_ADDR -1
-
-
-#set val(chan)           Channel/WirelessChannel    ;#Channel Type
-set val(prop)           Propagation/TwoRayGround   ;# radio-propagation model
+# Define options
+set val(chan)           Channel/WirelessChannel    ;# channel type
+set val(prop)           Propagation/FreeSpace   ;# radio-propagation model
 set val(netif)          Phy/WirelessPhy            ;# network interface type
-
-
-
 set val(mac)            Mac/802_11                 ;# MAC type
-#set val(mac)            Mac                 ;# MAC type
-#set val(mac)		Mac/Simple
-
-
-set val(ifq)            Queue/DropTail/PriQueue    ;# interface queue type
+# set val(mac)            Mac/Simple                 ;# MAC type
+set val(ifq)            Queue/DropTail/PriQueue               ;# interface queue type
 set val(ll)             LL                         ;# link layer type
 set val(ant)            Antenna/OmniAntenna        ;# antenna model
-set val(ifqlen)         32768                         ;# max packet in ifq
+set val(ifqlen)         10000                         ;# max packet in ifq
+set val(nn)             4                        ;# number of mobilenodes
+set val(rp)             DSR                       ;# routing protocol
+set val(x)              600                ;# X dimension of topography
+set val(y)             600              ;# Y dimension of topography  
+set val(stop)       25             ;# time of simulation end
+set val(R)         300
+set opt(tr)     out.tr
 
+set ns        [new Simulator]
+set tracefd  [open $opt(tr) w]
+set windowVsTime2 [open out.tr w]
+set namtrace      [open out.nam w]
 
-set val(rp) DumbAgent
-
-
-set ns [new Simulator]
-
-set f [open out1.tr w]
-$ns trace-all $f
-$ns eventtrace-all
-set nf [open out1.nam w]
-$ns namtrace-all-wireless $nf 700 200
+Mac/802_11 set dataRate_        1.2e6
+Mac/802_11 set RTSThreshold_    3000
+#disable RTS for 802.11 MAC
+# Mac/802_11 set RTSThreshold_ 2347
+# Mac/802_11 set RTSThreshold_ 3000
+$ns trace-all $tracefd
+#$ns use-newtrace 
+$ns namtrace-all-wireless $namtrace $val(x) $val(y)
 
 # set up topography object
 set topo       [new Topography]
 
-$topo load_flatgrid 700 200
+$topo load_flatgrid $val(x) $val(y)
 
-$ns color 3 green;
-$ns color 8 red;
-$ns color 1 black;
-$ns color 7 purple;
-$ns color 6 tan;
-$ns color 2 orange;
+create-god $val(nn)
 
 #
-# Create God
+#  Create nn mobilenodes [$val(nn)] and attach them to the channel. 
 #
-create-god 3
 
-
-#set mac0 [new Mac/802_11]
+# configure the nodes
 
 $ns node-config -adhocRouting $val(rp) \
-                -llType $val(ll) \
-                -macType $val(mac) \
-                -ifqType $val(ifq) \
-                -ifqLen $val(ifqlen) \
-                -antType $val(ant) \
-                -propType $val(prop) \
-                -phyType $val(netif) \
-		-channelType Channel/WirelessChannel \
-                -topoInstance $topo \
-                -agentTrace ON \
-                -routerTrace OFF \
-                -macTrace ON \
-                -movementTrace OFF 
+    -llType $val(ll) \
+    -macType $val(mac) \
+    -ifqType $val(ifq) \
+    -ifqLen $val(ifqlen) \
+    -antType $val(ant) \
+    -propType $val(prop) \
+    -phyType $val(netif) \
+    -channelType $val(chan) \
+    -topoInstance $topo \
+    -agentTrace ON \
+    -routerTrace ON \
+    -macTrace ON \
+    -movementTrace ON
 
-for {set i 0} {$i < 3} {incr i} {
-	set node_($i) [$ns node]
-	$node_($i) random-motion 0
-}
-
-$node_(0) color black
-$node_(1) color black
-$node_(2) color black
-
-$node_(0) set X_ 200.0
-$node_(0) set Y_ 30.0
-$node_(0) set Z_ 0.0
-
-$node_(1) set X_ 330.0
-$node_(1) set Y_ 150.0
-$node_(1) set Z_ 0.0
-
-$node_(2) set X_ 460.0
-$node_(2) set Y_ 30.0
-$node_(2) set Z_ 0.0
-
-
-$ns at 0.65 "$node_(2) setdest 600.0 30.0 10000.0"
-
-
-
-# subclass Agent/MessagePassing to make it do flooding
-
-Class Agent/MessagePassing/Flooding -superclass Agent/MessagePassing
-
-Agent/MessagePassing/Flooding instproc recv {source sport size data} {
-    $self instvar messages_seen node_
-    global ns 1 
-
-    # extract message ID from message
-    set message_id [lindex [split $data ":"] 0]
-    puts "\nNode [$node_ node-addr] got message $message_id\n"
-
-    if {[lsearch $messages_seen $message_id] == -1} {
-	lappend messages_seen $message_id
-        $ns trace-annotate "[$node_ node-addr] received {$data} from $source"
-        $ns trace-annotate "[$node_ node-addr] sending message $message_id"
-	$self sendto $size $data 1 $sport
-    } else {
-        $ns trace-annotate "[$node_ node-addr] received redundant message $message_id from $source"
+Phy/WirelessPhy set CSThresh 30.5e-10
+    for {set i 0} {$i < $val(nn) } { incr i } {
+        set node_($i) [$ns node]    
     }
+
+$node_(0) set X_ 0 
+$node_(0) set Y_ 300
+$node_(0) set Z_ 0
+
+$node_(1) set X_ 200
+$node_(1) set Y_ 300
+$node_(1) set Z_ 0
+
+$node_(2) set X_ 400
+$node_(2) set Y_ 300
+$node_(2) set Z_ 0
+
+$node_(3) set X_ 600
+$node_(3) set Y_ 300
+$node_(3) set Z_ 0
+
+for {set i 0} {$i<$val(nn)} {incr i} {
+    $ns initial_node_pos $node_($i) 30
 }
 
-Agent/MessagePassing/Flooding instproc send_message {size message_id data port} {
-    $self instvar messages_seen node_
-    global ns MESSAGE_PORT 1
+# Generation of movements
+$ns at 0 "$node_(1) setdest $val(R) $val(R) 3.0"
+$ns at 0 "$node_(2) setdest $val(R) $val(R) 3.0"
+$ns at 0 "$node_(3) setdest $val(R) $val(R) 3.0"
 
-    lappend messages_seen $message_id
-    $ns trace-annotate "[$node_ node-addr] sending message $message_id"
-    $self sendto $size "$message_id:$data" 1 $port
+# Set a TCP connection between node_(0) and node_(1)
+set tcp [new Agent/TCP/Newreno]
+#$tcp set class_ 2
+set tcp [new Agent/UDP]
+$tcp set class_ 2
+set sink [new Agent/Null]
+$ns attach-agent $node_(1) $tcp
+$ns attach-agent $node_(0) $sink
+$ns connect $tcp $sink
+set ftp [new Application/Traffic/CBR]
+$ftp attach-agent $tcp
+$ns at 0.0 "$ftp start"
+
+$tcp set fid_ 1
+$ns color 1 blue
+
+set tcp [new Agent/UDP]
+$tcp set class_ 2
+set sink [new Agent/Null]
+$ns attach-agent $node_(2) $tcp
+$ns attach-agent $node_(3) $sink
+$ns connect $tcp $sink
+set ftp [new Application/Traffic/CBR]
+$ftp attach-agent $tcp
+$ns at  0.0 "$ftp start"
+set tcp [new Agent/UDP]
+$tcp set class_ 2
+
+# Telling nodes when the simulation ends
+#for {set i 0} {$i < $val(nn) } { incr i } {
+ #   $ns at $val(stop) "$node_($i) reset";
+#}
+
+# ending nam and the simulation 
+$ns at $val(stop) "$ns nam-end-wireless $val(stop)"
+$ns at $val(stop) "stop"
+$ns at $val(stop) "puts \"end simulation\" ; $ns halt"
+proc stop {} {
+    # exec awk -f n1.awk out.tr
+    # exec awk -f n1.awk out.tr > out.xgr
+    # exec xgraph out.xgr &
+
+    global ns tracefd namtrace
+    $ns flush-trace
+    close $tracefd
+    close $namtrace
+    # exec awk -f n1.awk out.tr
+    exec nam out.nam &
+    exit 0
 }
-
-
-
-# attach a new Agent/MessagePassing/Flooding to each node on port $MESSAGE_PORT
-for {set i 0} {$i < 3} {incr i} {
-    set a($i) [new Agent/MessagePassing/Flooding]
-    $node_($i) attach  $a($i) $MESSAGE_PORT
-    $a($i) set messages_seen {}
-}
-
-$ns at 0.1 "$a(0) send_message 500 1  {first_message} $MESSAGE_PORT"
-$ns at 0.1 "$a(2) send_message 500 2  {second_message} $MESSAGE_PORT"
-
-$ns at 0.8 "$a(0) send_message 500 5  {fifth_message} $MESSAGE_PORT"
-$ns at 0.8 "$a(2) send_message 500 6  {sixth_message} $MESSAGE_PORT"
-
-$ns at 1.3 "$a(2) send_message 500 15 {fifteenth_message} $MESSAGE_PORT"
-$ns at 1.3 "$a(0) send_message 500 16 {sixteenth_message} $MESSAGE_PORT"
-
-for {set i 0} {$i < 3} {incr i} {
-	$ns initial_node_pos $node_($i) 30
-	$ns at 20.5 "$node_($i) reset";
-}
-
-$ns at 20.5 "finish"
-$ns at 20.5 "puts \"NS EXITING...\"; $ns halt"
-
-
-
-#INSERT ANNOTATIONS HERE
-
-proc finish {} {
-        global ns f nf val
-        $ns flush-trace
-        close $f
-        close $nf
-
-}
-
-puts "Starting Simulation..."
 
 $ns run
+
+
